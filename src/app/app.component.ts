@@ -1,45 +1,32 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AppareilService} from './services/appareil.service';
+import {Observable} from 'rxjs/Observable';
+// tslint:disable-next-line:import-blacklist
+import 'rxjs/Rx';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  isAuth = false;
-
-  lastUpdate = new Promise<Date>(
-    (resolve, reject) => {
-      const date = new Date();
-      setTimeout(() => { resolve(date); }, 2000 );
-    }
-  );
-
-  appareils = [
-    {
-      name: 'Machine à laver',
-      status: 'éteint'
-    },
-    {
-      name: 'Télévision',
-      status: 'allumé'
-    },
-    {
-      name: 'Ordinateur',
-      status: 'éteint'
-    }
-  ];
+export class AppComponent implements OnInit{
+  seconds: number | undefined;
 
   constructor() {
-    setTimeout(
-      () => {
-        this.isAuth = true;
-      }, 4000
-    );
   }
 
-  // tslint:disable-next-line:typedef
-  onAllumer(){
-    console.log('on allume tout');
+  ngOnInit(): void {
+    const counter = Observable.interval(1000);
+    counter.subscribe(
+      (value: number) => {
+        this.seconds = value;
+      },
+      (error: any) => {
+        console.log('Une erreur a été rencontrée !');
+      },
+      () => {
+        console.log('Observable complété !');
+      }
+    );
   }
 }
