@@ -47,4 +47,13 @@ export class AppareilViewComponent implements OnInit {
     this.appareilService.emitAppareilSubject();
   }
 
+  // tslint:disable-next-line:typedef
+  onSave() {
+    this.appareilService.saveAppareilToServer();
+  }
+
+  // tslint:disable-next-line:typedef
+  onFetch() {
+    this.appareilService.getAppareilsfromServer();
+  }
 }
